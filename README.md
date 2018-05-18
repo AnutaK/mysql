@@ -1,4 +1,5 @@
 Project 10: bamazon
+
 The bamazon homework utilizes JavaScript, node.js, npm packages (mysql & inquirer), and a MySQL database to create a CLI storefront for both customers and managers:
 
 A video walkthrough of both bamazonCustomer.js and bamazonManager.js can be viewed HERE
