@@ -64,7 +64,7 @@ function start() {
                             //passes the item_id and quantity to a function that updates the database
                             var stock = results[0].stock_quantity - choice.quantity
                             var quantity = choice.quantity;
-                            console.log("Checking Purchase quantity" + quantity)
+                            console.log("Checking Purchase quantity " + quantity)
                             var id = choice.productID;
                             var item = results[0].product_name;
                             var price = results[0].price;
