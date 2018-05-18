@@ -10,7 +10,7 @@ let connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "",
+    password: "rampage",
     database: "bamazon"
 });
 
@@ -101,6 +101,6 @@ function stockUpdate(stock, id) {
 function productSales(item, quantity, price) {
     console.log("Order Complete!");
     console.log("Your order is: ");
-    console.log(`Quantity: ${quantity} ${item}`);
+    console.log(`Quantity: ${quantity} of ${item}`);
     console.log(`Your final price is: ${quantity * price}`);
 }
