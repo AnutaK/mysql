@@ -21,7 +21,6 @@ connection.connect(function (err) {
 
 
 function start() {
-
     inquirer
         .prompt({
             name: "action",
@@ -54,11 +53,12 @@ function start() {
         });
 }
 
+var currentProduct = [];
 
 function productDisplay() {
     connection.query("SELECT item_id,product_name,price,stock_quantity from products", function (err, res) {
         if (err) throw err;
-
+        currentProduct = res;
         console.log("-----------------------------------");
         console.log("Below are the products available for sale: ");
         console.log("-----------------------------------");
@@ -96,6 +96,12 @@ function addToInventoryPrompt() {
             name: "quantity",
             type: "input",
             message: "How many units of the selected Product would you like to add to the Inventory?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+            }
         }])
         .then(function (choice) {
 
@@ -103,11 +109,13 @@ function addToInventoryPrompt() {
                     item_id: choice.productID
                 },
 
-                function (err) {
+                function (err, res) {
                     if (err) throw err;
+
+                    const totalInventory = parseInt(res[0].stock_quantity);
                     let id = choice.productID;
-                    let quantity = choice.quantity;
-                    addToInventory(quantity, id);
+                    let quantity = parseInt(choice.quantity);
+                    addToInventory(quantity, id, totalInventory);
                 }
 
             );
@@ -115,12 +123,15 @@ function addToInventoryPrompt() {
 
 }
 
-function addToInventory(stock, id) {
-    console.log(`Stock is ${stock} and id is ${id}`)
+function addToInventory(stock, id, inventory) {
+    console.log(`${stock} units will be added to products table with id: ${id}`)
     var stringId = id.toString();
+    let newInventory = stock + inventory;
+    let inventoryString = newInventory.toString();
+    console.log(currentProduct);
     connection.query(
         "UPDATE products SET ? WHERE ?", [{
-                stock_quantity: stock
+                stock_quantity: inventoryString
             },
             {
                 item_id: stringId
@@ -129,9 +140,10 @@ function addToInventory(stock, id) {
         function (error) {
             if (error) throw error;
             console.log("Inventory Updated!");
-            connection.end();
-        })
 
+        })
+    console.log(`The new Inventory ${inventoryString}`);
+    start();
 }
 
 function addNewProduct() {
@@ -151,17 +163,23 @@ function addNewProduct() {
                 name: "price",
                 type: "input",
                 message: "What is the price?",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
             },
             {
                 name: "quantity",
                 type: "input",
-                message: "What's the quantiry of the new product?",
-                // validate: function (value) {
-                //     if (isNaN(value) === false) {
-                //         return true;
-                //     }
-                //     return false;
-                // }
+                message: "What's the quantity of the new product?",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
             }
         ])
         .then(function (answer) {
@@ -178,7 +196,7 @@ function addNewProduct() {
                     console.log("Your product was created successfully!");
                     // re-prompt the user for if they want to bid or post
                     productDisplay();
-                    start();
+
                 }
             );
         });
