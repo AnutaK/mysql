@@ -5,7 +5,7 @@ The bamazon homework utilizes JavaScript, node.js, npm packages (mysql & inquire
 A video walkthrough of both bamazonCustomer.js and bamazonManager.js can be viewed HERE
 Walkthrough:
 
-bamazonCustomer.js
+ - bamazonCustomer.js
 upon load, the user is welcomed to the store and shown the current items in inventory (the item#, product name and price)
 they are prompted to enter the item_id of the product they want to purchase
 they are then prompted to enter the quantity they want to purchase
@@ -13,7 +13,8 @@ bamazonCustomer.js then validates the item_id entered to make sure the item_id e
 bamazonCustomer.js then queries the database to check a) if there is any inventory of the requested item (if there isn't they are alerted and returned to the main menu to select a different item) and b) if there is enough inventory to fulfill the order (if there is not they are prompted to enter a new quantity)
 once the order quanity is confirmed, the DB is queried and new inventory amount is updated
 the completed order is then displayed in the terminal
-bamazonManager.js
+
+ - bamazonManager.js
 upon load, the user is welcomed and presented with a list of options:
 View Product (allows the manager to view the current inventory (item #s, product name, price, and stock quantity))
 View Low Inventory Products (allows managers to only see products with less than 5 units in inventory. The DB is queried and bamazonManager iterates through the data only console.log'ing items with less then 5 units)
