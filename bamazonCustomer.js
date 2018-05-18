@@ -102,5 +102,5 @@ function productSales(item, quantity, price) {
     console.log("Order Complete!");
     console.log("Your order is: ");
     console.log(`Quantity: ${quantity} of ${item}`);
-    console.log(`Your final price is: ${quantity * price}`);
+    console.log(`Your final price is: $${quantity * price}`);
 }
